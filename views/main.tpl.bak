@@ -1,0 +1,72 @@
+% include('header.tpl')
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+        <div class="col-xs-12">
+          <table class="table table-bordered table-condensed table-responsive ">
+            <thead>
+              <tr>
+                <th>Node</th>
+                <th>Device Id</th>
+                <th>IP Address</th>
+                <th>Machine Type</th>
+                <th>Last Rfid</th>
+                <th>Last Price</th>
+                <th>Last Tap Time</th>
+                <th>Last Check-in</th>
+                <th>Low</th>
+                <th>Med</th>
+                <th>Hi</th>
+                <th>Assign Node</th>
+                <th>Assign Type</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            % for device in data['unregistered'] :
+             % if device['node'] == 0 :
+              <tr class='danger'>
+             % else:
+              <tr>
+             % end
+                <form action="/update" method="post">
+                <input type="hidden" name="device_id" value="{{device['device_id']}}">
+                <td>{{device['node']}}</td>
+                <td>{{device['device_id']}}</td>
+                <td>{{device['ip_address']}}</td>
+                <td>{{device['type']}}</td>
+                <td>{{device['last_rfid']}}</td>
+                <td>{{device['last_price']}}</td>
+                <td>{{device['last_tap']}}</td>
+                <td>{{device['last_checkin']}}</td>
+                <td><input style="width:50px" type="text" name="vend_low" value="{{device['vend_low']}}"/></td>
+                <td>
+                  <input type="text" style="width:50px" name="vend_med" value="{{device['vend_med']}}"/>
+                </td>
+                <td><input type="text" style="width:50px" name="vend_high" value="{{device['vend_high']}}"/></td>
+                <td><input type="text" style="width:50px" name="node" value="{{device['node']}}"/></td>
+                <td>
+                  <select name="type">
+                      <option value="1"> Washer </option>
+                      <option value="2"> Dryer </option>
+                  </select>
+                </td>
+                <td>
+	          <a href="/low/{{device['device_id']}}"><button type="button" class="btn btn-success">Low</button></a>
+	          <a href="/med/{{device['device_id']}}"><button type="button" class="btn btn-info">Med</button></a><br>
+	          <a href="/high/{{device['device_id']}}"><button type="button" class="btn btn-warning">High</button></a>
+	          <a href="/stop/{{device['device_id']}}"><button type="button" class="btn btn-danger">Stop</button></a>
+                  </td>
+               </form>
+              </tr>
+             % end
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+    </div> <!-- /container -->
+
+% include('footer.tpl')
+
+
