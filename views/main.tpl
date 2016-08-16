@@ -3,7 +3,9 @@
       <div class="row">
       	<div class="col-md-4"></div>
   	<div class="col-md-4">
-		<img class="img-responsive" src="/public/images/ansakit.jpg" alt="">
+              <p> {{data['host'] }} </p>
+             <img style="-webkit-user-select: none" src="http://192.168.1.18:8081/">
+<a href="/snapshot" ><button class="btn btn-success">Take Snapshot</button></a>
 	</div>
  	<div class="col-md-4"></div>
       </div>
@@ -17,7 +19,7 @@
 		</tr>
               </thead>
               <tbody>
-                 % for x in data:
+                 % for x in data['data']:
                  <tr>
 			<td> {{x['time']}} </td>
                  	<td> {{x['type']}} </td>

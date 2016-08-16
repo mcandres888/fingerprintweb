@@ -2,7 +2,7 @@
     <div class="container theme-showcase" role="main">
       <div class="row">
         <div class="col-xs-12">
- 	   <h2> Updating Finger print for {{data['name']}}</h2>
+ 	   <h2> Updating Finger print for {{data['data']['name']}}</h2>
           <div class="row">
           <div class="col-md-6">
             <ol>

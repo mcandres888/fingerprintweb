@@ -11,7 +11,7 @@
               </tr>
             </thead>
             <tbody>
-            % for x in data:
+            % for x in data['data']:
               <tr>
                 <form action="/fingerprintupdate" method="post">
                 <input type="hidden" name="finger_id" value="{{x['id']}}">

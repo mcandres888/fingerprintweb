@@ -6,7 +6,7 @@
                 <h1 class="page-header">Captured Images</h1>
             </div>
 
-        % for x in data:
+        % for x in data['data']:
             <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                 <a class="thumbnail" href="/image/{{x['id']}}/{{x['path']}}">
                     <img class="img-responsive" src="/public/images/{{x['path']}}" alt="">

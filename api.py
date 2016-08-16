@@ -6,9 +6,31 @@ import binascii
 import time
 import datetime
 from sqldb import *
+from subprocess import call
+import requests
 
 
 DB = SQLDatabase("finger.db")
+
+def getTimeStampFileName ():
+    ts = time.time()
+    st = datetime.datetime.fromtimestamp(ts).strftime('%Y_%m_%d%H_%M_%S.jpg')
+    return st
+
+def takesnapshot():
+    requests.get("http://localhost:8082/0/action/snapshot")
+    # copy file to images folder
+    filename = getTimeStampFileName() 
+    filepath = "/home/mcandres/sandbox/fingerprintweb/public/images/%s" % filename 
+    call(["cp", "/tmp/motion/lastsnap.jpg", filepath])
+    return filename
+
+
+def getLocalVariables () :
+    localData = {}
+    host = request.get_header('host')
+    localData['host'] = host
+    return localData
 
 
 # static files
@@ -17,17 +39,26 @@ def server_static(filepath):
     return static_file(filepath, root='public')
 
 
+@route('/snapshot')
+def snapshot():
+    takesnapshot()
+    redirect('/')
+
+
 @route('/fingerprints')
 def index():
     data = DB.getAllFDATA()
-    print data
-    return template('fingerprints', data=data)
+    localData = getLocalVariables()
+    localData['data'] = data
+    return template('fingerprints', data=localData)
 
 
 @route('/images')
 def images():
     data = DB.getAllImages()
-    return template('images', data=data)
+    localData = getLocalVariables()
+    localData['data'] = data
+    return template('images', data=localData)
 
 @route('/image/<epoch>/<image_path>')
 def image(epoch, image_path):
@@ -67,14 +98,18 @@ def index():
         'id': id,
         'name': name,
     }
-    return template('fingerprintupdate', data=data)
+    localData = getLocalVariables()
+    localData['data'] = data
+    return template('fingerprintupdate', data=localData)
 
 
 
 @route('/')
 def index():
     data = DB.getAllActivities()
-    return template('main', data=data)
+    localData = getLocalVariables()
+    localData['data'] = data
+    return template('main', data=localData)
 
 run(host='0.0.0.0', port=8095, reloader=False)
 
