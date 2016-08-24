@@ -1,13 +1,14 @@
 % include('header.tpl')
     <div class="container theme-showcase" role="main">
       <div class="row">
-      	<div class="col-md-4"></div>
-  	<div class="col-md-4">
-              <p> {{data['host'] }} </p>
-             <img style="-webkit-user-select: none" src="http://192.168.1.18:8081/">
+           <div class="span7 center"> 
+             <img style="-webkit-user-select: none" src="http://{{data['host']}}:8081/">
+      </div>
+      </div>
+      <div class="row">
+           <div class="span7 center"> 
 <a href="/snapshot" ><button class="btn btn-success">Take Snapshot</button></a>
-	</div>
- 	<div class="col-md-4"></div>
+      </div>
       </div>
       <div class="row">
           <table class="table table-hover">

@@ -9,6 +9,7 @@
           </div>
           <div class="row">
            <a href="/images"><button type="button" class="btn btn-success">Go back to captured list</button></a>
+           <a href="/image/delete/{{data['id']}}/{{data['path']}}"><button type="button" class="btn btn-danger">Delete</button></a>
           </div>
         </div>
       </div>

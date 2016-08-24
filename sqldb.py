@@ -4,10 +4,13 @@ import time
 import datetime
 import sqlite3 as lite
 import time
+import MySQLdb as mdb
+import sys
 
 class SQLDatabase:
     def __init__ (self, dbfile ):
         self.dbfile = dbfile
+        self.con = mdb.connect('localhost', 'root', 'root', 'fingerprint')
         self.init_db_struct()
 
     def close(self):
@@ -16,7 +19,7 @@ class SQLDatabase:
 
     def reconnect(self):
         try:
-            self.con = lite.connect(self.dbfile)
+            self.con =  mdb.connect('localhost', 'root', 'root', 'fingerprint')
             self.cur = self.con.cursor()
             return self.con
         except lite.Error, e:
@@ -152,6 +155,12 @@ class SQLDatabase:
         epoch_time = int(time.time())
         query_str = "INSERT INTO IMAGES VALUES (%d, '%s')" % (epoch_time, path)
         self.exec_query (query_str)
+
+    def deleteImage ( self, epoch):
+        query_str = "DELETE FROM IMAGES WHERE id=%d" % int(epoch)
+        self.exec_query (query_str)
+
+
 
     def formatImages ( self, data ):
         temp = {}
