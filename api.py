@@ -12,7 +12,7 @@ import requests
 
 
 app = application = bottle.Bottle()
-DB = SQLDatabase("finger.db")
+DB = SQLDatabase("fingerprint")
 
 def getTimeStampFileName ():
     ts = time.time()
@@ -79,6 +79,12 @@ def image(epoch, image_path):
     redirect('/images')
 
 
+@app.route('/activity/delete/<id>')
+def delete_activity(id):
+    DB.deleteActivity(id)
+    redirect('/')
+
+
 
 
 
@@ -93,7 +99,7 @@ def insertImage(image_path):
 
 @app.route('/insertActivity/<type>/<note>')
 def insertActivity(type, note):
-    DB.insertActivity(type, note)
+    DB.insertActivity(type, note, "")
     data = {
         'status' : 'ok'
     }
@@ -112,6 +118,22 @@ def index():
     localData = getLocalVariables()
     localData['data'] = data
     return template('fingerprintupdate', data=localData)
+
+
+@app.route('/textnumber')
+def index():
+    data = DB.getSMS()
+    localData = getLocalVariables()
+    localData['data'] = data
+    return template('textNumber', data=localData)
+
+
+@app.route('/textnumberupdate', method='POST')
+def index():
+    id = request.forms.get('mobile_id')
+    name = request.forms.get('mobile_number')
+    DB.updateSMS(id, name)
+    redirect('/textnumber')
 
 
 

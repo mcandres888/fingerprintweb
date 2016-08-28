@@ -17,6 +17,8 @@
 			<th> Time </th>
                  	<th> Type </th>
                  	<th> Notes </th>
+                 	<th> Image </th>
+                 	<th> Action </th>
 		</tr>
               </thead>
               <tbody>
@@ -25,6 +27,8 @@
 			<td> {{x['time']}} </td>
                  	<td> {{x['type']}} </td>
                  	<td> {{x['note']}} </td>
+                 	<td> <a href="http://{{data['host']}}/image/{{x['image']}}"> Picture </a> </td>
+                 	<td> <a href="http://{{data['host']}}/activity/delete/{{x['id']}}"> Delete </a> </td>
 		</tr>
                 % end
               </tbody>
