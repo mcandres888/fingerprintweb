@@ -77,6 +77,16 @@ def getTimeStampFileName ():
     return st
 
 
+def sendTextMessage ( data ):
+    num = DB.getSMS()
+    mobile_num = num[0]['mobile_number']
+    
+    cmd = ["/usr/bin/gammu-smsd-inject" , "-c" , 
+          "/etc/gammu-smsdrc", "TEXT", "%s" % mobile_num,
+          "-text" , "%s" % data ]
+    print "command : ", cmd
+    call(cmd)
+
 
 def takesnapshot():
     requests.get("http://localhost:8082/0/action/snapshot")
@@ -92,7 +102,8 @@ def snapshot(type , note):
     epoch_time = DB.insertImage(filename)
     image = "%s/%s"% (epoch_time, filename)
     DB.insertActivity(type, note, image)
-
+    image_url = "http://192.168.10.88/image/%s" % image
+    return image_url
 
 
 def lcd_init():
@@ -221,17 +232,22 @@ def finger_search(f):
                 time.sleep(1)
                 lcd_string("Taking picture",LCD_LINE_1)
                 lcd_string("of intruder...",LCD_LINE_2)
-                snapshot("intruder", "Someone is trying to access ")
+                image_url = snapshot("intruder", "Someone is trying to access ")
+                data = "Someone is trying to access. %s" % image_url
+                sendTextMessage ( data )
                 return 0
             else:
                 print('Found template at position #' + str(positionNumber))
                 print('The accuracy score is: ' + str(accuracyScore))
                 # get the data for the finger
                 match = DB.isIdExists(positionNumber, "FDATA")
+                print match
                 lcd_string("Good Day! ",LCD_LINE_1)
                 lcd_string(match[1],LCD_LINE_2)
                 time.sleep(1)
-                snapshot("entry", "%s has entered the facility" % match[1])
+                image_url = snapshot("entry", "%s has entered the facility" % match[1])
+                data = "%s has entered the facility. %s" % ( match[1], image_url)
+                sendTextMessage ( data )
                 lcd_string("Opening lock ",LCD_LINE_1)
                 lcd_string("for 3 seconds" ,LCD_LINE_2)
                 GPIO.output(4, 1)

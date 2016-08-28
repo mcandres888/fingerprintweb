@@ -1,0 +1,10 @@
+/home/pi/sandbox/fingerprintweb/sqldb.py:105: Warning: Table 'FDATA' already exists
+  self.cur.execute("CREATE TABLE if not exists  FDATA (id INT,name TEXT, status INT)")
+/home/pi/sandbox/fingerprintweb/sqldb.py:119: Warning: Table 'IMAGES' already exists
+  self.cur.execute("CREATE TABLE if not exists IMAGES (id INT,path TEXT)")
+/home/pi/sandbox/fingerprintweb/sqldb.py:111: Warning: Table 'ACTIVITY' already exists
+  self.cur.execute("CREATE TABLE if not exists  ACTIVITY (id INT,type TEXT,note TEXT, image TEXT)")
+/home/pi/sandbox/fingerprintweb/sqldb.py:81: Warning: Table 'ENROL' already exists
+  self.cur.execute("CREATE TABLE if not exists  ENROL (id INT,name TEXT, status INT)")
+/home/pi/sandbox/fingerprintweb/sqldb.py:89: Warning: Table 'SMS' already exists
+  self.cur.execute("CREATE TABLE if not exists  SMS (id INT,mobile_number TEXT)")
