@@ -1,4 +1,4 @@
-% include('header.tpl')
+%include('header.tpl')
     <div class="container theme-showcase" role="main">
       <div class="row">
            <div class="span7 center"> 
